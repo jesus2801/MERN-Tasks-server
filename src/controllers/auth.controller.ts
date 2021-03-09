@@ -3,7 +3,7 @@ import {validationResult} from 'express-validator';
 import jwt from 'jsonwebtoken';
 
 import User from '../models/User';
-import {UserDocument} from '../interfaces/users.interface';
+import {UserDocument, Payload} from '../interfaces/users.interface';
 
 import helpers from '../herlpers/functions';
 
@@ -33,14 +33,14 @@ export default {
         });
       }
 
-      const payload = {
+      const payload: Payload = {
         user: {
           id: user.id,
         },
       };
 
       const token = await jwt.sign(payload, process.env.SECRET_KEY!, {
-        expiresIn: 7200,
+        expiresIn: '2h',
       });
 
       res.status(200).json({

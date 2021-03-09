@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc",
-    "dev": "nodemon src/index.ts --exec ts-node",
+    "production": "uglifyjs-folder dist -eo production -x .js",
+    "dev": "nodemon src/index.ts --exec ts-node --files",
     "test": "jest --runInBand",
     "test:coverage": "jest --coverage"
   },
@@ -14,7 +15,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/jsonwebtoken": "^8.5.0",
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",
     "dotenv": "^8.2.0",
@@ -22,7 +22,6 @@
     "express-validator": "^6.10.0",
     "helmet": "^4.4.1",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.6.4",
     "path": "^0.12.7"
   },
   "jest": {
@@ -38,7 +37,7 @@
     "@types/compression": "^1.7.0",
     "@types/express": "^4.17.11",
     "@types/express-validator": "^3.0.0",
-    "@types/mongoose": "^5.10.3",
+    "@types/jsonwebtoken": "^8.5.0",
     "@types/morgan": "^1.9.2",
     "autocannon": "^7.0.5",
     "jest": "^26.6.3",

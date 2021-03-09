@@ -1,6 +1,7 @@
 import {Schema, model} from 'mongoose';
+import {ProjectDocument} from '../interfaces/Project.interfaces';
 
-const ProjectSchema = new Schema({
+const ProjectSchema = new Schema<ProjectDocument>({
   name: {
     type: String,
     required: true,

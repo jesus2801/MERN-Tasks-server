@@ -1,8 +1,10 @@
 import {Document} from 'mongoose';
 
-export interface ProjectDocument extends Document {
+export interface Project {
   name: string;
-  email: string;
-  password: string;
-  register: Date;
+  creator: number | string;
+}
+
+export interface ProjectDocument extends Document, Project {
+  date: Date;
 }
