@@ -2,6 +2,7 @@ import {Request, Response, NextFunction} from 'express';
 import {validationResult} from 'express-validator';
 import {ProjectDocument} from '../interfaces/Project.interfaces';
 import Project from '../models/Project';
+import helpers from '../herlpers/functions';
 
 export default {
   createProject: function (req: Request, res: Response, next: NextFunction) {
@@ -46,12 +47,8 @@ export default {
         name,
       };
 
-      const project: ProjectDocument = await Project.findById(req.params.id);
-      if (project.creator.toString() !== req.user.id) {
-        return res.status(401).json({
-          msg: 'Acces denied',
-        });
-      }
+      const projectDoc = await helpers.validProject(req.params.id, res, req);
+      if (!projectDoc) return;
 
       const response = await Project.findByIdAndUpdate(
         {_id: req.params.id},
@@ -66,12 +63,8 @@ export default {
 
   deleteProject: async function (req: Request, res: Response, next: NextFunction) {
     try {
-      const project: ProjectDocument = await Project.findById(req.params.id);
-      if (project.creator.toString() !== req.user.id) {
-        return res.status(401).json({
-          msg: 'Acces denied',
-        });
-      }
+      const projectDoc = await helpers.validProject(req.params.id, res, req);
+      if (!projectDoc) return;
 
       await Project.findOneAndDelete({_id: req.params.id});
 

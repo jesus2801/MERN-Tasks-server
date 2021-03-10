@@ -5,8 +5,10 @@ import morgan from 'morgan';
 
 import usersCtrl from '../routes/users.routes';
 import authCtrl from '../routes/auth.routes';
+import taskCtrl from '../routes/tasks.routes';
 import projectsCtrl from '../routes/projects.routes';
 import connectDB from './database.config';
+import auth from '../middlewares/auth.middleware';
 
 class App {
   private app: Application;
@@ -62,12 +64,15 @@ class App {
     this.app.use(urlencoded({extended: false, limit: 5242880}));
     this.app.use(json({limit: 5242880}));
     this.app.use(morgan('dev'));
+
+    this.app.use('/api', auth.verifyToken);
   }
 
   private routes() {
-    this.app.use('/api/users', usersCtrl);
-    this.app.use('/api/auth', authCtrl);
+    this.app.use('/users', usersCtrl);
+    this.app.use('/auth', authCtrl);
     this.app.use('/api/projects', projectsCtrl);
+    this.app.use('/api/tasks', taskCtrl);
   }
 
   private extra() {
