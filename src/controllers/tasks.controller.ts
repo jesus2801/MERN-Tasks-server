@@ -1,8 +1,6 @@
 import {Request, Response, NextFunction} from 'express';
 import {validationResult} from 'express-validator';
-import {ProjectDocument} from '../interfaces/Project.interfaces';
 import {TaskInterface, TaskDocument} from '../interfaces/Task.interfaces';
-import Project from '../models/Project';
 import Task from '../models/Task';
 import helpers from '../herlpers/functions';
 
@@ -69,7 +67,7 @@ export default {
 
       if (!task) {
         return res.status(404).json({
-          msg: 'Task not found',
+          msg: 'Sorry an error occurred',
         });
       }
 
@@ -94,7 +92,7 @@ export default {
 
       if (!task) {
         return res.status(404).json({
-          msg: 'Task not found',
+          msg: 'Sorry an error occurred',
         });
       }
 

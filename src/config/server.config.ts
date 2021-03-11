@@ -2,6 +2,7 @@ import compression from 'compression';
 import express, {urlencoded, Application, json} from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import cors from 'cors';
 
 import usersCtrl from '../routes/users.routes';
 import authCtrl from '../routes/auth.routes';
@@ -60,6 +61,13 @@ class App {
     //   this.app.use(helmet.referrerPolicy());
     //   this.app.use(helmet.xssFilter());
     this.app.use(helmet());
+    this.app.use(
+      cors({
+        origin: process.env.REACT_ORIGIN!,
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        optionsSuccessStatus: 200,
+      })
+    );
     this.app.use(compression());
     this.app.use(urlencoded({extended: false, limit: 5242880}));
     this.app.use(json({limit: 5242880}));

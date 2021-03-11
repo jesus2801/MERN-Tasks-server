@@ -23,14 +23,14 @@ export default {
 
     if (!exits) {
       res.status(404).json({
-        msg: 'Project not found',
+        msg: 'Sorry an error occurred',
       });
       return false;
     }
 
     if (exits.creator.toString() !== req.user.id) {
       res.status(401).json({
-        msg: 'Acces denied',
+        msg: 'Sorry an error occurred',
       });
       return false;
     }

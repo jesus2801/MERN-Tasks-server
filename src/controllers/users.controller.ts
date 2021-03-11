@@ -23,7 +23,7 @@ export default {
 
       if (isUser) {
         return res.status(400).json({
-          msg: 'User already exists',
+          msg: 'The email entered already belongs to another user',
         });
       }
 
@@ -47,7 +47,15 @@ export default {
       });
     } catch (e) {
       next(e);
-      // res.status(400).send('Sorry, there was an error');
+    }
+  },
+
+  getUser: async function (req: Request, res: Response, next: NextFunction) {
+    try {
+      const user = await User.findById(req.user.id).select('-password');
+      res.status(200).json({user});
+    } catch (e) {
+      next(e);
     }
   },
 };

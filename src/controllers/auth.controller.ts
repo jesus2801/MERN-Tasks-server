@@ -22,14 +22,14 @@ export default {
       const user: UserDocument = await User.findOne({mail});
       if (!user) {
         return res.status(400).json({
-          msg: 'Username does not exist',
+          msg: 'Username or password entered, they are incorrect',
         });
       }
 
-      const isEquals = helpers.comparePass(password, user.password);
+      const isEquals = await helpers.comparePass(password, user.password);
       if (!isEquals) {
         return res.status(400).json({
-          msg: 'Incorrect password',
+          msg: 'Username or password entered, they are incorrect',
         });
       }
 
