@@ -25,7 +25,7 @@ class App {
 
   private settings() {
     connectDB();
-    this.app.set('port', process.env.port || this.port || 3000);
+    this.app.set('port', process.env.PORT || this.port || 5000);
     if (process.env.STATE! != 'dev') {
       this.app.set('trust proxy', true);
     }
