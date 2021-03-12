@@ -2,6 +2,7 @@ import {Router} from 'express';
 import ctrl from '../controllers/users.controller';
 import {check} from 'express-validator';
 import auth from '../middlewares/auth.middleware';
+import {Signuplimiter} from '../assets/rateLimiter';
 
 const router = Router();
 router
@@ -15,6 +16,7 @@ router
         min: 6,
       }),
     ],
+    Signuplimiter,
     ctrl.createUser
   );
 
