@@ -42,7 +42,7 @@ class App {
     this.app.use(compression());
     this.app.use(urlencoded({extended: false, limit: 5242880}));
     this.app.use(json({limit: 5242880}));
-    this.app.use(morgan('dev'));
+    // this.app.use(morgan('dev'));
 
     this.app.use('/api', auth.verifyToken);
   }
