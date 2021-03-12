@@ -25,7 +25,7 @@ class App {
 
   private settings() {
     connectDB();
-    this.app.set('port', process.env.PORT || this.port || 3000);
+    this.app.set('port', process.env.port || this.port || 3000);
     if (process.env.STATE! != 'dev') {
       this.app.set('trust proxy', true);
     }
@@ -60,7 +60,7 @@ class App {
   }
 
   public async listen() {
-    const server = await this.app.listen(this.app.get('port'));
+    const server = await this.app.listen(this.app.get('port'), '0.0.0.0');
     console.log(`server is running on port ${this.app.get('port')}`);
     return server;
   }
