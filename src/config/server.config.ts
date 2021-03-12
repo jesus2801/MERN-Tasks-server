@@ -1,7 +1,7 @@
 import compression from 'compression';
 import express, {urlencoded, Application, json} from 'express';
 import helmet from 'helmet';
-import morgan from 'morgan';
+// import morgan from 'morgan';
 import cors from 'cors';
 
 import usersCtrl from '../routes/users.routes';
