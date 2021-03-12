@@ -6,7 +6,7 @@ const router = Router();
 router
   .route('/')
   //get all tasks
-  .get([check('project', 'Project is required').notEmpty()], ctrl.getProjectTasks)
+  .get(ctrl.getProjectTasks)
   //create new task
   .post(
     [
@@ -27,6 +27,6 @@ router
     ],
     ctrl.updateTask
   )
-  .delete(check('project', 'Project is required').notEmpty(), ctrl.deleteTask);
+  .delete(ctrl.deleteTask);
 
 export default router;

@@ -30,20 +30,20 @@ export default {
   },
 
   getProjectTasks: async function (req: Request, res: Response, next: NextFunction) {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        errors: errors.array(),
+    const {project} = req.query;
+    if (!project) {
+      res.status(400).json({
+        msg: 'Project is required',
       });
     }
 
-    const {project} = req.body;
-
     try {
-      const projectDoc = await helpers.validProject(project, res, req);
+      const projectDoc = await helpers.validProject(project as string, res, req);
       if (!projectDoc) return;
 
-      const tasks: TaskInterface[] = await Task.find({project: projectDoc});
+      const tasks: TaskInterface[] = await Task.find({project: projectDoc}).sort({
+        date: -1,
+      });
       res.status(200).json({tasks});
     } catch (e) {
       next(e);
@@ -72,8 +72,8 @@ export default {
       }
 
       const newTask: any = {};
-      if (name) newTask.name = name;
-      if (state) newTask.state = state;
+      newTask.name = name;
+      newTask.state = state;
       task = await Task.findOneAndUpdate({_id: req.params.id}, newTask, {new: true});
       res.status(200).json({task});
     } catch (e) {
@@ -83,9 +83,14 @@ export default {
 
   deleteTask: async function (req: Request, res: Response, next: NextFunction) {
     try {
-      const {project} = req.body;
+      const {project} = req.query;
+      if (!project) {
+        res.status(400).json({
+          msg: 'Project is required',
+        });
+      }
 
-      const isValid = await helpers.validProject(project, res, req);
+      const isValid = await helpers.validProject(project as string, res, req);
       if (!isValid) return;
 
       let task: TaskDocument = await Task.findById(req.params.id);

@@ -10,6 +10,7 @@ import taskCtrl from '../routes/tasks.routes';
 import projectsCtrl from '../routes/projects.routes';
 import connectDB from './database.config';
 import auth from '../middlewares/auth.middleware';
+import errorCtrl from '../controllers/error.controller';
 
 class App {
   private app: Application;
@@ -84,7 +85,7 @@ class App {
   }
 
   private extra() {
-    //error controller
+    this.app.use(errorCtrl);
   }
 
   public async listen() {
